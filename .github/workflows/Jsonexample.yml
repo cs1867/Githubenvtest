@@ -1,0 +1,40 @@
+name: JSON Example
+
+on: 
+  push:
+    branches: 
+      - main
+
+jobs:
+  example-job:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Create JSON file with initial value
+      run: |
+        echo '{"MY_VARIABLE": "initial_value"}' > variable.json
+
+    - name: Read environment variable from JSON
+      id: read-json
+      run: |
+        MY_VARIABLE=$(jq -r '.MY_VARIABLE' variable.json)
+        echo "MY_VARIABLE=$MY_VARIABLE" >> $GITHUB_ENV
+
+    - name: Display initial environment variable
+      run: echo "Initial MY_VARIABLE is $MY_VARIABLE"
+
+    - name: Update environment variable in JSON
+      run: |
+        jq '.MY_VARIABLE = "updated_value"' variable.json > tmp.json && mv tmp.json variable.json
+
+    - name: Read updated environment variable from JSON
+      id: read-updated-json
+      run: |
+        MY_VARIABLE=$(jq -r '.MY_VARIABLE' variable.json)
+        echo "MY_VARIABLE=$MY_VARIABLE" >> $GITHUB_ENV
+
+    - name: Display updated environment variable
+      run: echo "Updated MY_VARIABLE is $MY_VARIABLE"
