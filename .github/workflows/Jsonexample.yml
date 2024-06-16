@@ -15,7 +15,7 @@ jobs:
 
     - name: Create JSON file with initial value
       run: |
-        echo '{"MY_VARIABLE": "initial_value"}' > variable.json
+        echo '{"MY_VARIABLE": "start here !!"}' > variable.json
 
     - name: Read environment variable from JSON
       id: read-json
@@ -28,7 +28,7 @@ jobs:
 
     - name: Update environment variable in JSON
       run: |
-        jq '.MY_VARIABLE = "updated_value"' variable.json > tmp.json && mv tmp.json variable.json
+        jq '.MY_VARIABLE = "2nd value"' variable.json > tmp.json && mv tmp.json variable.json
 
     - name: Read updated environment variable from JSON
       id: read-updated-json
