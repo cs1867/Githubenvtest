@@ -1,0 +1,26 @@
+name: Environment Variable Example
+
+on: 
+  push:
+    branches: 
+      - main
+
+jobs:
+  example-job:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set initial environment variable
+      run: echo "MY_VARIABLE=initial_value" >> $GITHUB_ENV
+
+    - name: Display initial environment variable
+      run: echo "Initial MY_VARIABLE is $MY_VARIABLE"
+
+    - name: Update environment variable
+      run: echo "MY_VARIABLE=updated_value" >> $GITHUB_ENV
+
+    - name: Display updated environment variable
+      run: echo "Updated MY_VARIABLE is $MY_VARIABLE"
